@@ -465,7 +465,7 @@ int raw_quick_by_rows(T const* x, uint64_t rows, uint64_t cols, int sign = 1)
 template <class T = double>
 int quick_by_rows(T const* x, uint64_t rows, uint64_t cols, int sign = 1)
 {
-  int old = fegetround();
+  int old = std::fegetround();
   std::fesetround(FE_UPWARD);
   int ret_sign = raw_quick_by_rows(x, rows, cols, sign);
   std::fesetround(old);
@@ -506,7 +506,7 @@ int raw_quick_jagged(std::pair<T const*,uint64_t> const* x, uint64_t rows, int s
 template <class T = double>
 int quick_jagged(std::pair<T const*,uint64_t> const* x, uint64_t rows, int sign = 1)
 {
-  int old = fegetround();
+  int old = std::fegetround();
   std::fesetround(FE_UPWARD);
   int ret_sign = raw_quick_jagged(x, rows, sign);
   std::fesetround(old);
@@ -560,9 +560,9 @@ int raw_quick_det_sign(T const* x, uint64_t n)
 template <class T>
 int quick_det_sign(T const* x, uint64_t n)
 {
-  int old = fegetround();
+  int old = std::fegetround();
   std::fesetround(FE_UPWARD);
-  int sign = quick_det_sign(x, n);
+  int sign = raw_quick_det_sign(x, n);
   std::fesetround(old);
   return sign;
 }
@@ -624,7 +624,7 @@ class float_sign
 
     int jagged(std::pair<T const*, uint64_t>* parcel, uint64_t n_parcels, int sign = 1)
     {
-      int old = fegetround();
+      int old = std::fegetround();
       std::fesetround(FE_UPWARD);
       int ret_sign = raw_jagged(parcel, n_parcels, sign);
       std::fesetround(old);
@@ -657,7 +657,7 @@ class float_sign
 
     int by_rows(T const* x, uint64_t rows, uint64_t cols, int sign = 1)
     {
-      int old = fegetround();
+      int old = std::fegetround();
       std::fesetround(FE_UPWARD);
       int ret_sign = raw_by_rows(x, rows, cols, sign);
       std::fesetround(old);
@@ -712,7 +712,7 @@ class float_sign
 
     int det_sign(T const* x, uint64_t n)
     {
-      int old = fegetround();
+      int old = std::fegetround();
       std::fesetround(FE_UPWARD);
       int ret_sign = raw_det_sign(x, n);
       std::fesetround(old);
